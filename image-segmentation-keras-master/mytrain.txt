@@ -1,0 +1,59 @@
+python3 visualizeDataset.py \
+ --images="data/dataset1/images_prepped_train/" \
+ --annotations="data/dataset1/annotations_prepped_train/" \
+ --n_classes=10 
+ 
+
+THEANO_FLAGS=device=gpu,floatX=float32  python3  train.py \
+ --save_weights_path=weights/ex1 \
+ --train_images="data/dataset1/images_prepped_train/" \
+ --train_annotations="data/dataset1/annotations_prepped_train/" \
+ --val_images="data/dataset1/images_prepped_test/" \
+ --val_annotations="data/dataset1/annotations_prepped_test/" \
+ --n_classes=10 \
+ --input_height=224 \
+ --input_width=224 \
+ --model_name="vgg_unet" \
+ --load_weights="data/vgg16_weights_th_dim_ordering_th_kernels.h5" 
+
+
+THEANO_FLAGS=device=gpu,floatX=float32  python3  predict.py \
+ --save_weights_path=weights/ex1 \
+ --epoch_number=5 \
+ --test_images="data/dataset1/images_prepped_test/" \
+ --output_path="data/predictions/" \
+ --n_classes=10 \
+ --input_height=224 \
+ --input_width=224 \
+ --model_name="vgg_unet"
+
+-------------------------------------------------------------------------------
+
+python3 visualizeDataset.py \
+ --images="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/leedsbutterfly/images/" \
+ --annotations="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/leedsbutterfly/segmentations/" \
+ --n_classes=10 
+
+
+THEANO_FLAGS=device=gpu,floatX=float32  python3  train.py \
+ --save_weights_path="weights/butterfly/ex1/" \
+ --train_images="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/images_train/" \
+ --train_annotations="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/annotation_train/" \
+ --val_images="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/images_test/" \
+ --val_annotations="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/annotation_test/" \
+ --n_classes=10 \
+ --input_height=224 \
+ --input_width=224\
+ --model_name="vgg_unet" \
+ --load_weights="data/vgg16_weights_tf_dim_ordering_tf_kernels.h5" 
+
+
+THEANO_FLAGS=device=gpu,floatX=float32  python3  predict.py \
+ --save_weights_path="weights/butterfly/ex1/" \
+ --epoch_number=4 \
+ --test_images="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/images_test/" \
+ --output_path="data/dataset_butterfly/leedsbutterfly_dataset_v1.0/butterfly_dataset/predictions/" \
+ --n_classes=10 \
+ --input_height=224 \
+ --input_width=224 \
+ --model_name="vgg_unet"
